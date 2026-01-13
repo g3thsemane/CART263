@@ -47,17 +47,14 @@ let ellipse1 = {
 
 function setup() {
     createCanvas(600, 600);
-
-
-
-}
-
-function draw() {
-
     background(0);
-
     drawEllipse();
+
+
 }
+
+//function draw() {
+//}
 
 
 function drawEllipse() {
