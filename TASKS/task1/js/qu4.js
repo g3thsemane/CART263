@@ -1,6 +1,6 @@
 "use strict";
 
-let rect1 = {
+const rect1 = {
 
     x: 0,
     y: 0,
@@ -14,7 +14,7 @@ let rect1 = {
     }
 }
 
-let rect2 = {
+const rect2 = {
     x: 200,
     y: 0,
     width: 200,
@@ -28,7 +28,7 @@ let rect2 = {
     }
 }
 
-let rect3 = {
+const rect3 = {
 
     x: 400,
     y: 0,
@@ -109,8 +109,10 @@ function drawRectangles() {
 
     fill(rect1.fill.r, rect1.fill.g, rect1.fill.b);
     rect(rect1.x, rect1.y, rect1.width, rect1.height);
+
     fill(rect2.fill.r, rect2.fill.g, rect2.fill.b);
     rect(rect2.x, rect2.y, rect2.width, rect2.height);
+
     fill(rect3.fill.r, rect3.fill.g, rect3.fill.b);
     rect(rect3.x, rect3.y, rect3.width, rect3.height);
 }
