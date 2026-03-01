@@ -14,3 +14,29 @@ const gameH = 600;
 
 const playerSize = 18;
 const playerSpeed = 260;
+
+const adSpawnBase = 550;
+const adSpawnPlus = 180;
+const adSpeed = 6;
+
+const adMax = 35;
+
+//DOM elements
+
+const gameEl = document.querySelector("game");
+
+if (!gameEl) {
+    throw new Error("Missing game element!");
+}
+
+//Creating the HUD and overlay elements
+
+const hudEl = document.createElement("div");
+
+hudEl.classname = "hud";
+hudEl.innerHTML = `
+<div class = "panel" id="scorePanel">Score: < b id="score">0</b></div>
+<div class="panel" id="statusPanel">Arrows / WASD to steer</div>
+`;
+
+gameEl.appendChild(hudEl);

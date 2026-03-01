@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+
+    height: 100%;
+    margin: 0;
+    font-family: Arial;
+    background: #000;
+}
+
+#game {
+
+    position: relative;
+    width: min(100vw, 900px);
+    height: min(100vh, 600px);
+    margin: 0 auto;
+    background: #fff;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+}
+
+/* Player */
+
+.player {}
