@@ -38,5 +38,17 @@ hudEl.innerHTML = `
 <div class = "panel" id="scorePanel">Score: < b id="score">0</b></div>
 <div class="panel" id="statusPanel">Arrows / WASD to steer</div>
 `;
-
 gameEl.appendChild(hudEl);
+
+const overlayEl = document.createElement("div");
+overlayEl.className = "overlay";
+overlayEl.innerHTML = `
+<div class="card">
+    <h1>POP UP!</h1>
+    <p>To consume or not to consume, that is the question. </p>
+<button id="startBtn">Start</button>
+</div>
+`;
+gameEl.appendChild(overlayEl);
+
+

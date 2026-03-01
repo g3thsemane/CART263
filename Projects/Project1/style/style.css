@@ -18,6 +18,13 @@ body {
     background: #000;
 }
 
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #game {
 
     position: relative;
@@ -59,4 +66,26 @@ body {
     pointer-events: none;
 }
 
-.hud .panel {}
+.hud .panel {
+
+    backhround: var(--hud);
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Game start and game over screens */
+
+.overlay {
+
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.55);
+    color: var(--text);
+    text-align: center;
+    padding: 24px;
+
+
+}
