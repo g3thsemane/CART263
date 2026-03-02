@@ -122,3 +122,15 @@ body {
     color: #111;
     font-weight: 700;
 }
+
+.overlay button:hover {
+
+    transform: translateY(-2px);
+    background: #63c66b;
+}
+
+.overlay button:active {
+
+    transform: translateY(1px);
+    background: #50ae55;
+}

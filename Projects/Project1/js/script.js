@@ -22,7 +22,6 @@ const adSpeed = 6;
 const adMax = 35;
 
 //DOM elements
-
 const gameElmnt = document.querySelector("#game");
 
 if (!gameElmnt) {
@@ -30,7 +29,6 @@ if (!gameElmnt) {
 }
 
 //Creating the HUD and overlay elements
-
 const hudElmnt = document.createElement("div");
 
 hudElmnt.classname = "hud";
@@ -50,5 +48,11 @@ overlayElmnt.innerHTML = `
 </div>
 `;
 gameElmnt.appendChild(overlayElmnt);
+
+//Creating the player
+const playerElmnt = document.createElement("div");
+
+playerElmnt.className = "player";
+gameElmnt.appendChild(playerElmnt);
 
 
