@@ -23,32 +23,32 @@ const adMax = 35;
 
 //DOM elements
 
-const gameEl = document.querySelector("game");
+const gameElmnt = document.querySelector("#game");
 
-if (!gameEl) {
+if (!gameElmnt) {
     throw new Error("Missing game element!");
 }
 
 //Creating the HUD and overlay elements
 
-const hudEl = document.createElement("div");
+const hudElmnt = document.createElement("div");
 
-hudEl.classname = "hud";
-hudEl.innerHTML = `
-<div class = "panel" id="scorePanel">Score: < b id="score">0</b></div>
+hudElmnt.classname = "hud";
+hudElmnt.innerHTML = `
+<div class = "panel" id="scorePanel">Score: <b id="score">0</b></div>
 <div class="panel" id="statusPanel">Arrows / WASD to steer</div>
 `;
-gameEl.appendChild(hudEl);
+gameElmnt.appendChild(hudElmnt);
 
-const overlayEl = document.createElement("div");
-overlayEl.className = "overlay";
-overlayEl.innerHTML = `
+const overlayElmnt = document.createElement("div");
+overlayElmnt.className = "overlay";
+overlayElmnt.innerHTML = `
 <div class="card">
     <h1>POP UP!</h1>
     <p>To consume or not to consume, that is the question. </p>
 <button id="startBtn">Start</button>
 </div>
 `;
-gameEl.appendChild(overlayEl);
+gameElmnt.appendChild(overlayElmnt);
 
 
