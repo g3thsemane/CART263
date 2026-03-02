@@ -1,10 +1,10 @@
 /* 
 * CART 263 A
-* Project 1: You Can Run And You Can Hide But You Can't Run And You Can't Hide
+* Project 1: You Can Run And You Can Hide But You Can't Run * And You Can't Hide
 *
 * Benjamin Merhi
 *
-* A game based on the invasive nature of pop up advertisements.
+* A game based on the invasive nature of pop up             * advertisements.
 *
 */
 
@@ -21,7 +21,7 @@ const adSpeed = 6;
 
 const adMax = 35;
 
-//DOM elements
+////////// DOM elements //////////
 const gameElmnt = document.querySelector("#game");
 
 if (!gameElmnt) {
@@ -55,4 +55,32 @@ const playerElmnt = document.createElement("div");
 playerElmnt.className = "player";
 gameElmnt.appendChild(playerElmnt);
 
+////////// Game //////////
+
+const state = {
+
+    //Boolean to check game states
+    running: false,
+    gameover: false,
+
+    //Game stats
+    score: 0,
+    thyme: 0,
+
+    //Player position and velocity
+    x: 120,
+    y: 120,
+    vx: playerSpeed,
+    vy: 0,
+
+    //Direction the player is moving in, used for steering 
+    dirX: 1,
+    dirY: 0,
+
+    //Array to hold the ad objects
+    ads: [],
+    nextAdSpawn: 0,
+    spawnInterval: adSpawnBase,
+    lastTs: 0,
+}
 
