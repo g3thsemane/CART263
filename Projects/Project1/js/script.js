@@ -1,12 +1,12 @@
-/* 
-* CART 263 A
-* Project 1: You Can Run And You Can Hide But You Can't Run * And You Can't Hide
-*
-* Benjamin Merhi
-*
-* A game based on the invasive nature of pop up             * advertisements.
-*
-*/
+/*
+ * CART 263 A
+ * Project 1: You Can Run And You Can Hide But You Can't Run * And You Can't Hide
+ *
+ * Benjamin Merhi
+ *
+ * A game based on the invasive nature of pop up             * advertisements.
+ *
+ */
 
 //Configuration variables
 const gameW = 900;
@@ -21,11 +21,11 @@ const adSpeed = 6;
 
 const adMax = 35;
 
-////////// DOM elements //////////
+////////// -- DOM elements -- //////////
 const gameElmnt = document.querySelector("#game");
 
 if (!gameElmnt) {
-    throw new Error("Missing game element!");
+  throw new Error("Missing game element!");
 }
 
 //Creating the HUD and overlay elements
@@ -55,32 +55,58 @@ const playerElmnt = document.createElement("div");
 playerElmnt.className = "player";
 gameElmnt.appendChild(playerElmnt);
 
-////////// Game //////////
+////////// -- Game -- //////////
 
 const state = {
+  //Boolean to check game states
+  running: false,
+  gameover: false,
 
-    //Boolean to check game states
-    running: false,
-    gameover: false,
+  //Game stats
+  score: 0,
+  thyme: 0,
 
-    //Game stats
-    score: 0,
-    thyme: 0,
+  //Player position and velocity
+  x: 120,
+  y: 120,
+  vx: playerSpeed,
+  vy: 0,
 
-    //Player position and velocity
-    x: 120,
-    y: 120,
-    vx: playerSpeed,
-    vy: 0,
+  //Direction the player is moving in, used for steering
+  dirX: 1,
+  dirY: 0,
 
-    //Direction the player is moving in, used for steering 
-    dirX: 1,
-    dirY: 0,
+  //Array to hold the ad objects
+  ads: [],
+  nextSpawnAt: 0,
+  spawnInterval: adSpawnBase,
+  lastTs: 0,
+};
 
-    //Array to hold the ad objects
-    ads: [],
-    nextAdSpawn: 0,
-    spawnInterval: adSpawnBase,
-    lastTs: 0,
-}
+////////// -- Game Input -- //////////
 
+//Set to hold the keys that are currently being pressed
+const keys = new Set();
+window.addEventListener("keydown", (e) => {
+  if (
+    [
+      "ArrowUp",
+      "ArrowDown",
+      "ArrowLeft",
+      "ArrowRight",
+      "w",
+      "a",
+      "s",
+      "d",
+      "W",
+      "A",
+      "S",
+      "D",
+      " ",
+    ].includes(e.key)
+  ) {
+    e.preventDefault();
+    keys.add(e.key);
+    if (e.key === " " && !state.running) startGame();
+  }
+});

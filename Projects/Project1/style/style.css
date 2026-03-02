@@ -1,136 +1,144 @@
 :root {
-    --bg: #0b0f1a;
-    --hud: rgba(0, 0, 0, 0.55);
-    --text: #eaeaea;
-    --danger: #ff3b3b;
+  --bg: #0b0f1a;
+  --hud: rgba(0, 0, 0, 0.55);
+  --text: #eaeaea;
+  --danger: #ff3b3b;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
 body {
-
-    height: 100%;
-    margin: 0;
-    font-family: Arial;
-    background: #000;
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+  background: #000;
 }
 
 body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #game {
-
-    position: relative;
-    width: min(100vw, 900px);
-    height: min(100vh, 600px);
-    margin: 0 auto;
-    background: #fff;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    border-radius: 16px;
+  position: relative;
+  width: min(100vw, 900px);
+  height: min(100vh, 600px);
+  margin: 0 auto;
+  background: #fff;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
 }
 
 /* Player */
 
 .player {
-
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #7cf3ff;
-    box-shadow: 0 0 18px rgba(124, 243, 255, 0.65);
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #7cf3ff;
+  box-shadow: 0 0 18px rgba(124, 243, 255, 0.65);
 }
 
 /* HUD */
 
 .hud {
-
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: space-between;
-    color: var(--text);
-    font-size: 14px;
-    pointer-events: none;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text);
+  font-size: 14px;
+  pointer-events: none;
 }
 
 .hud .panel {
-
-    background: var(--hud);
-    padding: 8px 10px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--hud);
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Game start and game over screens */
 
 .overlay {
-
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    background: rgba(0, 0, 0, 0.55);
-    color: var(--text);
-    text-align: center;
-    padding: 24px;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--text);
+  text-align: center;
+  padding: 24px;
 }
 
 .overlay .card {
-
-    width: min(520px, 92%);
-    background: rgba(15, 18, 28, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    border-radius: 16px;
-    padding: 18px;
-    box-shadow: 0 20px, 60px rgba(0, 0, 0, 0.55);
+  width: min(520px, 92%);
+  background: rgba(15, 18, 28, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow:
+    0 20px,
+    60px rgba(0, 0, 0, 0.55);
 }
 
 .overlay h1 {
-
-    margin: 0 0 10px;
-    font-size: 20px;
+  margin: 0 0 10px;
+  font-size: 20px;
 }
 
 .overlay p {
-
-    margin: 0 0 14px;
-    opacity: 0.9;
-    line-height: 1.35;
+  margin: 0 0 14px;
+  opacity: 0.9;
+  line-height: 1.35;
 }
 
 .overlay button {
-
-    pointer-events: auto;
-    cursor: pointer;
-    border: none;
-    padding: 10px 14px;
-    border-radius: 12px;
-    background: #50ae55;
-    color: #111;
-    font-weight: 700;
+  pointer-events: auto;
+  cursor: pointer;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #50ae55;
+  color: #111;
+  font-weight: 700;
 }
 
 .overlay button:hover {
-
-    transform: translateY(-2px);
-    background: #63c66b;
+  transform: translateY(-2px);
+  background: #63c66b;
 }
 
 .overlay button:active {
+  transform: translateY(1px);
+  background: #50ae55;
+}
 
-    transform: translateY(1px);
-    background: #50ae55;
+/* Pop up advertisement window */
+
+.ad {
+  position: absolute;
+  width: 190px;
+  height: 120px;
+  background: #f4f4f4;
+  border-radius: 10px;
+  border: 2px solid #111;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  user-select: none;
+}
+
+.ad .titlebar {
+  height: 28px;
 }
