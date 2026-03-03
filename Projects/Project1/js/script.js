@@ -89,6 +89,7 @@
   //Set to hold the keys that are currently being pressed
   const keys = new Set();
   window.addEventListener("keydown", (e) => {
+    //Set of keys that are used for the game, preventing default browser behaviour for these keys
     if (
       [
         "ArrowUp",
@@ -108,10 +109,13 @@
     ) {
       e.preventDefault();
       keys.add(e.key);
+
+      //Start the game if space is pressed and the isn't already running
       if (e.key === " " && !state.running) startGame();
     }
   });
 
+  //Implement movement through key pressing
   function readInput() {
     //Direction vector variables
     let x = 0,
@@ -134,23 +138,32 @@
 
     //If there is no input, keep the curren direction
     if (x === 0 && y === 0) return;
+
+    //Normalize
+    const len = Math.hypot(x, y);
+    state.dirX = x / len;
+    state.dirY = y / len;
   }
 
-  window.addEventListener("keydown", (e) => {
-    keys.add(e.key);
-    console.log([...keys]);
-  });
+  ////////// Utility and configuration //////////
 
-  window.addEventListener("keyup", (e) => {
-    keys.delete(e.key);
-    console.log([...keys]);
-  });
+  //Keeping everything within the game area
+  function clamp(v, min, max) {
+    return Math.max(min, Math.min(max, v));
+  }
 
-  window.addEventListener("keydown", (e) => {
-    console.log("down:", e.key);
-  });
+  //A rectangle collision check, used for checking if the player has been hit by an ad
+  function rectsOverlap(a, b) {
+    return !(
+      a.x + a.w < b.x ||
+      a.x > b.x + b.w ||
+      a.y + a.h < b.y ||
+      a.y > b.y + b.h
+    );
+  }
 
-  window.addEventListener("keyup", (e) => {
-    console.log("up:", e.key);
-  });
+  function getGameRect() {
+    const r = gameElmnt.getBoundingClientRect();
+    return { w: r.width, h: r.height };
+  }
 })();
