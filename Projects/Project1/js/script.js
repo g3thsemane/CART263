@@ -166,4 +166,27 @@
     const r = gameElmnt.getBoundingClientRect();
     return { w: r.width, h: r.height };
   }
+
+  ////////// Ads //////////
+
+  //Array of pop up advertisements with varying text
+  const adPop = [
+    {
+      title: "Your Mac has 7 viruses!",
+      body: "Immediate ation required. Click now to repair",
+      cta: "REPAIR",
+    },
+    {
+      title: "Claim your prize",
+      body: "You've beeen selected for a reward. Hurry!",
+      cta: "CLAIM",
+    },
+    {
+      title: "Hot singles near you",
+      body: "There is hoards of hot singles ready to mingle!",
+      cta: "OPEN",
+    },
+    { title: "System Update", body: "Restart required.", cta: "RESTART" },
+    { title: "Limited time offer", body: "Buy before it's gone.", cta: "BUY" },
+  ];
 })();

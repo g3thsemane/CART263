@@ -122,7 +122,7 @@ body {
 
 .overlay button:active {
   transform: translateY(1px);
-  background: #368d3a;
+  background: #50ae55;
 }
 
 /* Pop up advertisement window */
