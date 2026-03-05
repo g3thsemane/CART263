@@ -189,4 +189,25 @@
     { title: "System Update", body: "Restart required.", cta: "RESTART" },
     { title: "Limited time offer", body: "Buy before it's gone.", cta: "BUY" },
   ];
+
+  function makeAdElement() {
+    const data = adPop[(Math.random() * adSnippets.length) | 0];
+    const elmnt = document.createElement("div");
+    elmnt.className = "ad";
+    elmnt.innerHTML = `
+    <div class="titlebar">
+        <div class="dots">
+            <span class="dot close"></span>
+            <span class="dot min"></span>
+            <span class="dot max"></span>
+        </div>
+        <div>${data.title}</div>
+    </div>
+    <div class="body">
+        <div>${data.body}</div>
+        <span class="cta">${data.cta}</span>
+    </div>
+    `;
+    return elmnt;
+  }
 })();

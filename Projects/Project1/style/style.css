@@ -29,7 +29,7 @@ body {
   width: min(100vw, 900px);
   height: min(100vh, 600px);
   margin: 0 auto;
-  background: #fff;
+  background: #3e3e47;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 16px;
@@ -122,7 +122,7 @@ body {
 
 .overlay button:active {
   transform: translateY(1px);
-  background: #50ae55;
+  background: #397b3c;
 }
 
 /* Pop up advertisement window */
