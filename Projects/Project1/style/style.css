@@ -140,5 +140,57 @@ body {
 }
 
 .ad .titlebar {
-  height: 28px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  background: #ececec;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 12px;
+  color: #111;
+}
+
+.ad .title .dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.ad .titlebar .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  background: #bbb;
+}
+
+.ad .titlebar .dot.close {
+  background: #ff5f57;
+}
+
+.ad .titlebar .dot.min {
+  background: #febc2e;
+}
+
+.ad .titlebar .dot.max {
+  background: #28c840;
+}
+
+.ad .body {
+  padding: 10px;
+  font-size: 12px;
+  color: #111;
+  line-height: 1.2;
+}
+
+.ad .cta {
+  margin-top: 8px;
+  display: inline-block;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: #ff3b3b;
+  color: #fff;
+  font-weight: 800;
+  font-size: 12px;
 }

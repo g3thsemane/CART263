@@ -210,4 +210,22 @@
     `;
     return elmnt;
   }
+
+  function spawnAd() {
+    if (state.ads.length >= adMax) return;
+
+    const { w: gw, h: gh } = getGameRect();
+
+    const forwardDist = 220 + Math.random() * 180;
+    const sideOffset = Math.random() * 180 - 90;
+
+    const px = -state.dirY;
+    const py = state.dirX;
+
+    const baseX = state.x + state.dirX * forwardDist + px * sideOffset;
+    const baseY = state.y + state.dirY * forwardDist + py * sideOffset;
+
+    const aw = 170 + Math.random() * 60;
+    const ah = 105 + Math.random() * 45;
+  }
 })();
