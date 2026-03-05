@@ -190,8 +190,9 @@
     { title: "Limited time offer", body: "Buy before it's gone.", cta: "BUY" },
   ];
 
+  //Picks random content from adPop, creates a div, and fills the HTML with the selected content
   function makeAdElement() {
-    const data = adPop[(Math.random() * adSnippets.length) | 0];
+    const data = adPop[(Math.random() * adPop.length) | 0];
     const elmnt = document.createElement("div");
     elmnt.className = "ad";
     elmnt.innerHTML = `
@@ -211,21 +212,58 @@
     return elmnt;
   }
 
+  //Spawning an ad in front of the player
   function spawnAd() {
+    //Allow maximum ads
     if (state.ads.length >= adMax) return;
 
+    //Game boundaries
     const { w: gw, h: gh } = getGameRect();
 
+    //Compute a spawn point in fronnt of the player
     const forwardDist = 220 + Math.random() * 180;
     const sideOffset = Math.random() * 180 - 90;
 
+    //Perpendicular direction
     const px = -state.dirY;
     const py = state.dirX;
 
+    //Base spawn position so ads appear ahead of where the user is going
     const baseX = state.x + state.dirX * forwardDist + px * sideOffset;
     const baseY = state.y + state.dirY * forwardDist + py * sideOffset;
 
+    //Random ad size
     const aw = 170 + Math.random() * 60;
     const ah = 105 + Math.random() * 45;
+
+    //Keeping the ad inside bounds
+    const x = clamp(baseX, 0, gw - aw);
+    const y = clamp(baseX, 0, gh - ah);
+
+    //Including drift so the ad moves slightly giving it a more "alive" feel
+    const drift = 30 + Math.random() * 70;
+    const dx = px * drift * (Math.random() < 0.5 ? -1 : 1);
+    const dy = py * drift * (Math.random() < 0.5 ? -1 : 1);
+
+    //Creating the DOM element, and appending
+    const elmnt = makeAdElement();
+    elmnt.style.width = `${aw}px`;
+    elmnt.style.width = `${ah}px`;
+    elmnt.style.left = `${x}px`;
+    elmnt.style.top = `${y}px`;
+    elmnt.style.zIndex = String(10 + state.ads.length);
+
+    gameElmnt.appendChild(elmnt);
+
+    //Storing ad object
+    state.ads.push({
+      elmnt,
+      x,
+      y,
+      w: aw,
+      h: ah,
+      tx: clamp(x + dx, 0, gw - aw),
+      ty: clamp(y + dy, 0, gh - ah),
+    });
   }
 })();
