@@ -272,4 +272,12 @@
     for (const ad of state.ads) ad.elmnt.remove();
     state.ads.length = 0;
   }
+
+  ////////// Game Loop //////////
+
+  //Player positioning
+  function setPlayerPos() {
+    playerElmnt.style.left = `${state.x}px`;
+    playerElmnt.style.top = `${state.y}px`;
+  }
 })();
