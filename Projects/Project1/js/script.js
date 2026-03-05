@@ -266,4 +266,10 @@
       ty: clamp(y + dy, 0, gh - ah),
     });
   }
+
+  //Clearing the ads, for starting and restarting the game
+  function clearAds() {
+    for (const ad of state.ads) ad.elmnt.remove();
+    state.ads.length = 0;
+  }
 })();
