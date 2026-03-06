@@ -88,9 +88,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 18px;
-  box-shadow:
-    0 20px,
-    60px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
 }
 
 .overlay h1 {

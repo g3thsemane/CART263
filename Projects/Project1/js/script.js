@@ -280,4 +280,82 @@
     playerElmnt.style.left = `${state.x}px`;
     playerElmnt.style.top = `${state.y}px`;
   }
+
+  //The "actual" game loop, constantly running and updating
+  function tick(ts) {
+    //Getting the time elapsed since last frame
+    const dt = state.lastTS ? (ts - state.lastTs) / 1000 : 0;
+    state.lastTs = ts;
+
+    state.t += dt;
+
+    //Increasing spawn time of ads over time
+    state.spawnInterval = Math.max(
+      adSpawnPlus,
+      adSpawnBase - state.t * adSpeed,
+    );
+
+    //Keyboard input influences direction
+    readInput();
+    state.vx = state.dirX * playerSpeed;
+    state.vy = state.dirY * playerSpeed;
+
+    //Connecting to user positioj
+    state.x += state.vx * dt;
+    state.y += state.vy * dt;
+
+    //Boundaries
+    const { w: gw, h: gh } = getGameRect();
+    if (state.x < 0) {
+      state.x = 0;
+      state.dirX *= -1;
+    }
+    if (state.y < 0) {
+      state.y = 0;
+      state.dirY *= -1;
+    }
+    if (state.x > gw - playerSize) {
+      state.x = gw - playerSize;
+      state.dirX *= -1;
+    }
+    if (state.y > gh - playerSize) {
+      state.y = gh - playerSize;
+      state.dirY *= -1;
+    }
+
+    setPlayerPos();
+
+    //Spawning the ads
+
+    const current = performance.now();
+
+    if (current >= state.nextSpawnAt) {
+      spawnAd();
+      //Shaking effect
+      const shake = Math.random() * 120 - 60;
+      state.nextSpawnAt = current + state.spawnInterval + shake;
+    }
+
+    //Collision
+    const playerRect = {
+      x: state.x,
+      y: state.y,
+      w: playerSize,
+      h: playerSize,
+    };
+
+    for (const ad of state.ads) {
+      const adRect = { x: ad.x, y: ad.y, w: ad.w, h: ad.h };
+      if (rectsOverlap(playerRect, adRect)) {
+        endGame();
+        return;
+      }
+    }
+
+    //Score
+    state.score = Math.floor(state.t * 10);
+    document.querySelector("#score").textContent = String(state.score);
+
+    requestAnimationFrame(tick);
+  }
 })();
