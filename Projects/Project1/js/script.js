@@ -267,6 +267,17 @@
     });
   }
 
+  //Moving ads slightly as to not have a static
+  function updateAds(dt) {
+    const ease = 1 - Math.pow(0.001, dt);
+    for (const ad of state.ads) {
+      ad.x += (ad.tx - ad.x) * ease;
+      ad.y += (ad.ty - ad.y) * ease;
+      ad.elmnt.style.left = `${ad.x}px`;
+      ad.elmnt.style.top = `${ad.y}px`;
+    }
+  }
+
   //Clearing the ads, for starting and restarting the game
   function clearAds() {
     for (const ad of state.ads) ad.elmnt.remove();
@@ -326,7 +337,6 @@
     setPlayerPos();
 
     //Spawning the ads
-
     const current = performance.now();
 
     if (current >= state.nextSpawnAt) {
@@ -336,7 +346,9 @@
       state.nextSpawnAt = current + state.spawnInterval + shake;
     }
 
-    //Collision
+    updateAds(dt);
+
+    //Collision detection and consequence
     const playerRect = {
       x: state.x,
       y: state.y,
@@ -356,6 +368,7 @@
     state.score = Math.floor(state.t * 10);
     document.querySelector("#score").textContent = String(state.score);
 
+    //Loop
     requestAnimationFrame(tick);
   }
 })();
