@@ -1,18 +1,15 @@
 /*
  * CART 263 A
- * Project 1: You Can Run And You Can Hide But You Can't Run * And You Can't Hide
+ * Project 1: You Can Run And You Can Hide But You Can't Run And You Can't Hide
  *
  * Benjamin Merhi
  *
- * A game based on the invasive nature of pop up             * advertisements.
+ * A game based on the invasive nature of pop up advertisements.
  *
  */
 
 (() => {
   //Configuration variables
-  const gameW = 900;
-  const gameH = 600;
-
   const playerSize = 18;
   const playerSpeed = 260;
 
@@ -32,7 +29,7 @@
   //Creating the HUD and overlay elements
   const hudElmnt = document.createElement("div");
 
-  hudElmnt.classname = "hud";
+  hudElmnt.className = "hud";
   hudElmnt.innerHTML = `
 <div class = "panel" id="scorePanel">Score: <b id="score">0</b></div>
 <div class="panel" id="statusPanel">Arrows / WASD to steer</div>
@@ -65,7 +62,7 @@
 
     //Game stats
     score: 0,
-    thyme: 0,
+    t: 0,
 
     //Player position and velocity
     x: 120,
@@ -113,6 +110,10 @@
       //Start the game if space is pressed and the isn't already running
       if (e.key === " " && !state.running) startGame();
     }
+  });
+
+  window.addEventListener("keyup", (e) => {
+    keys.delete(e.key);
   });
 
   //Implement movement through key pressing
@@ -238,7 +239,7 @@
 
     //Keeping the ad inside bounds
     const x = clamp(baseX, 0, gw - aw);
-    const y = clamp(baseX, 0, gh - ah);
+    const y = clamp(baseY, 0, gh - ah);
 
     //Including drift so the ad moves slightly giving it a more "alive" feel
     const drift = 30 + Math.random() * 70;
@@ -248,7 +249,7 @@
     //Creating the DOM element, and appending
     const elmnt = makeAdElement();
     elmnt.style.width = `${aw}px`;
-    elmnt.style.width = `${ah}px`;
+    elmnt.style.height = `${ah}px`;
     elmnt.style.left = `${x}px`;
     elmnt.style.top = `${y}px`;
     elmnt.style.zIndex = String(10 + state.ads.length);
@@ -295,7 +296,7 @@
   //The "actual" game loop, constantly running and updating
   function tick(ts) {
     //Getting the time elapsed since last frame
-    const dt = state.lastTS ? (ts - state.lastTs) / 1000 : 0;
+    const dt = state.lastTs ? (ts - state.lastTs) / 1000 : 0;
     state.lastTs = ts;
 
     state.t += dt;
@@ -371,4 +372,52 @@
     //Loop
     requestAnimationFrame(tick);
   }
+
+  ////////// Start and End //////////
+  const startBtn = overlayElmnt.querySelector("#startBtn");
+  startBtn.addEventListener("click", startGame);
+
+  function startGame() {
+    gameElmnt.classList.remove("gameover");
+    overlayElmnt.style.display = "none";
+
+    clearAds();
+
+    state.running = true;
+    state.gameover = false;
+    state.score = 0;
+    state.t = 0;
+    state.lastTs = 0;
+
+    //Reset
+
+    state.x = 120;
+    state.y = 120;
+    state.dirX = 1;
+    state.dirY = 0;
+    setPlayerPos();
+
+    state.spawnInterval = adSpawnBase;
+    state.nextSpawnAt = performance.now() + 250;
+
+    requestAnimationFrame(tick);
+  }
+
+  function endGame() {
+    state.running = false;
+    state.gameover = true;
+    gameElmnt.classList.add("gameover");
+
+    overlayElmnt.style.display = "grid";
+    overlayElmnt.querySelector(".card").innerHTML = `
+    <h1>GAME OVER</h1>
+    <p>You hit an ad. Score: <b>${state.score}</b></p>
+    <button id="restartBtn">Restart</button>
+    `;
+    overlayElmnt
+      .querySelector("#restartBtn")
+      .addEventListener("click", startGame, { once: true });
+  }
+
+  setPlayerPos();
 })();
