@@ -58,6 +58,7 @@ body {
   color: var(--text);
   font-size: 14px;
   pointer-events: none;
+  z-index: 500;
 }
 
 .hud .panel {

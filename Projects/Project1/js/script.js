@@ -17,11 +17,12 @@
   const adSpawnPlus = 180;
   const adSpeed = 6;
 
-  const adMax = 35;
+  const adMax = 45;
 
   ////////// -- DOM elements -- //////////
   const gameElmnt = document.querySelector("#game");
 
+  //Safety, used initially, not really necessary now but keeping it here cause why not?
   if (!gameElmnt) {
     throw new Error("Missing game element!");
   }
@@ -53,10 +54,10 @@
   playerElmnt.className = "player";
   gameElmnt.appendChild(playerElmnt);
 
-  ////////// -- Game -- //////////
+  ////////// -- Game State -- //////////
 
   const state = {
-    //Boolean to check game states
+    //Boolean to check game loop
     running: false,
     gameover: false,
 
@@ -76,8 +77,14 @@
 
     //Array to hold the ad objects
     ads: [],
+
+    //Storing when next ad should spawn
     nextSpawnAt: 0,
+
+    //Space between ad spawns
     spawnInterval: adSpawnBase,
+
+    //Timing
     lastTs: 0,
   };
 
@@ -140,7 +147,7 @@
     //If there is no input, keep the curren direction
     if (x === 0 && y === 0) return;
 
-    //Normalize
+    //Normalize, making speeds in all directions the same
     const len = Math.hypot(x, y);
     state.dirX = x / len;
     state.dirY = y / len;
@@ -174,7 +181,7 @@
   const adPop = [
     {
       title: "Your Mac has 7 viruses!",
-      body: "Immediate ation required. Click now to repair",
+      body: "Immediate action required. Click now to repair",
       cta: "REPAIR",
     },
     {
@@ -193,7 +200,9 @@
 
   //Picks random content from adPop, creates a div, and fills the HTML with the selected content
   function makeAdElement() {
+    //Picking on random template from previous function
     const data = adPop[(Math.random() * adPop.length) | 0];
+    //Creating div and putting it in ad class
     const elmnt = document.createElement("div");
     elmnt.className = "ad";
     elmnt.innerHTML = `
@@ -210,12 +219,13 @@
         <span class="cta">${data.cta}</span>
     </div>
     `;
+    //Returning newly made DOM element
     return elmnt;
   }
 
   //Spawning an ad in front of the player
   function spawnAd() {
-    //Allow maximum ads
+    //Allow only maximum ads
     if (state.ads.length >= adMax) return;
 
     //Game boundaries
@@ -225,11 +235,11 @@
     const forwardDist = 220 + Math.random() * 180;
     const sideOffset = Math.random() * 180 - 90;
 
-    //Perpendicular direction
+    //Perpendicular direction, so that ad is always in front regardless of direction
     const px = -state.dirY;
     const py = state.dirX;
 
-    //Base spawn position so ads appear ahead of where the user is going
+    //Spawn position so ads appear ahead of where the user is going
     const baseX = state.x + state.dirX * forwardDist + px * sideOffset;
     const baseY = state.y + state.dirY * forwardDist + py * sideOffset;
 
@@ -252,6 +262,7 @@
     elmnt.style.height = `${ah}px`;
     elmnt.style.left = `${x}px`;
     elmnt.style.top = `${y}px`;
+    //Newer ads appear on top of the older ones
     elmnt.style.zIndex = String(10 + state.ads.length);
 
     gameElmnt.appendChild(elmnt);
@@ -268,12 +279,15 @@
     });
   }
 
-  //Moving ads slightly as to not have a static
+  //Updating ads through each frame, so that they ease in
   function updateAds(dt) {
+    //Creating ease amount based on time
     const ease = 1 - Math.pow(0.001, dt);
     for (const ad of state.ads) {
+      //Move a little bit closer to target position
       ad.x += (ad.tx - ad.x) * ease;
       ad.y += (ad.ty - ad.y) * ease;
+      //Update DOM element to match new position
       ad.elmnt.style.left = `${ad.x}px`;
       ad.elmnt.style.top = `${ad.y}px`;
     }
@@ -287,7 +301,7 @@
 
   ////////// Game Loop //////////
 
-  //Player positioning
+  //Player positioning and render
   function setPlayerPos() {
     playerElmnt.style.left = `${state.x}px`;
     playerElmnt.style.top = `${state.y}px`;
@@ -295,10 +309,12 @@
 
   //The "actual" game loop, constantly running and updating
   function tick(ts) {
+    //Ends loop after game over
+    if (!state.running) return;
     //Getting the time elapsed since last frame
     const dt = state.lastTs ? (ts - state.lastTs) / 1000 : 0;
     state.lastTs = ts;
-
+    //Add elapsed time to total game time
     state.t += dt;
 
     //Increasing spawn time of ads over time
@@ -335,6 +351,7 @@
       state.dirY *= -1;
     }
 
+    //Update player position every frame
     setPlayerPos();
 
     //Spawning the ads
@@ -347,6 +364,7 @@
       state.nextSpawnAt = current + state.spawnInterval + shake;
     }
 
+    //Drift ads towards targets
     updateAds(dt);
 
     //Collision detection and consequence
@@ -369,14 +387,17 @@
     state.score = Math.floor(state.t * 10);
     document.querySelector("#score").textContent = String(state.score);
 
-    //Loop
+    //Animation loop, called every frame
     requestAnimationFrame(tick);
   }
 
   ////////// Start and End //////////
+
+  //Starting the game with start button
   const startBtn = overlayElmnt.querySelector("#startBtn");
   startBtn.addEventListener("click", startGame);
 
+  //Configuration upon game start
   function startGame() {
     gameElmnt.classList.remove("gameover");
     overlayElmnt.style.display = "none";
@@ -390,7 +411,6 @@
     state.lastTs = 0;
 
     //Reset
-
     state.x = 120;
     state.y = 120;
     state.dirX = 1;
@@ -400,9 +420,11 @@
     state.spawnInterval = adSpawnBase;
     state.nextSpawnAt = performance.now() + 250;
 
+    //Animation loop
     requestAnimationFrame(tick);
   }
 
+  //Displaying end game overlay upon game over
   function endGame() {
     state.running = false;
     state.gameover = true;
