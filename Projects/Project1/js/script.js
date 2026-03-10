@@ -41,8 +41,8 @@
   overlayElmnt.className = "overlay";
   overlayElmnt.innerHTML = `
 <div class="card">
-    <h1>POP UP!</h1>
-    <p>To consume or not to consume, that is the question. </p>
+    <h1>You Can Run And You Can Hide But You Can't Run And You Can't Hide</h1>
+    <p>Avoid the ads, save your sanity </p>
 <button id="startBtn">Start</button>
 </div>
 `;
