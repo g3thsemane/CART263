@@ -22,7 +22,7 @@ function go_all_stuff() {
     theContexts.push(context);
   }
 
-  let drawingBoardA = new DrawingBoard(
+  let drawingBoardA = new TaskDrawingBoard(
     theCanvases[0],
     theContexts[0],
     theCanvases[0].id,
@@ -33,7 +33,7 @@ function go_all_stuff() {
   );
   drawingBoardA.display();
 
-  let drawingBoardB = new DrawingBoard(
+  let drawingBoardB = new TaskDrawingBoard(
     theCanvases[1],
     theContexts[1],
     theCanvases[1].id,
@@ -52,7 +52,7 @@ function go_all_stuff() {
   );
   drawingBoardB.display();
 
-  let drawingBoardC = new DrawingBoard(
+  let drawingBoardC = new TaskDrawingBoard(
     theCanvases[2],
     theContexts[2],
     theCanvases[2].id,
@@ -63,7 +63,7 @@ function go_all_stuff() {
   );
   drawingBoardC.display();
 
-  let drawingBoardD = new DrawingBoard(
+  let drawingBoardD = new TaskDrawingBoard(
     theCanvases[3],
     theContexts[3],
     theCanvases[3].id,
@@ -83,6 +83,7 @@ function go_all_stuff() {
 
     smoothVolume = smoothVolume * 0.9 + volume * 0.1;
 
+    drawingBoardA.animate();
     drawingBoardB.animate(smoothVolume);
     drawingBoardC.animate(smoothVolume);
     drawingBoardD.run(
@@ -106,6 +107,14 @@ function go_all_stuff() {
    * Please for this exercise - do not add any new shapes other than the circular object...
    *
    */
+   window.addEventListener("keydown", function(e){
+    if(e.code === "Space"){
+        e.preventDefault();
+        if(drawingBoardA.objectsOnCanvas.length > 0){
+            drawingBoardA.objectsOnCanvas.pop();
+        }
+    }
+ })
 
   /** TASK 2:(Drawing Board B) -
    *  1: Affect the rectangle by input from the microphone somehow, in real time...

@@ -62,11 +62,14 @@ class VideoObj {
 
   //called when rectangle color is to be updated
   changeColor(newCol) {
-    /** FILL IN */
+    this.shapeCol = newCol;
   }
   //called when rectangle Pos is to be updated
   updatePositionRect(mx, my) {
-    /** FILL IN */
+    if (!Number.isFinite(mx) || !Number.isFinite(my)) {
+      return;
+    }
+
     let mouseX = mx;
     let mouseY = my;
     this.shapeX = mouseX - 25; // Center the rectangle on the mouse
