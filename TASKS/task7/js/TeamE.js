@@ -45,8 +45,10 @@ export class PlanetE {
         //TODO: Add from 1 to 3 orbiting moons to the planet group. 
         this.moons = [];
 
+        //random amount of moons between 1 and 3
         const moonCount = THREE.MathUtils.randInt(1, 3);
 
+        //moon 
         for (let i = 0; i < moonCount; i++) {
             const moonPivot = new THREE.Group();
             const moonRadius = THREE.MathUtils.randFloat(0.2, 0.45);
@@ -69,6 +71,8 @@ export class PlanetE {
         }
 
         //STEP 3:
+
+        //Loading the 3D model prop and addinng it to the planet group
         this.planetProps = [];
         this.propLoader.load('./zucknormal.glb', (gltf) => {
             const propModel = this.preparePropModel(gltf.scene);
@@ -86,7 +90,8 @@ export class PlanetE {
 
         this.scene.add(this.group);
     }
-    
+
+    //Tick
     update(delta) {
         // Orbit around sun
         this.angle += this.orbitSpeed * delta * 30;
